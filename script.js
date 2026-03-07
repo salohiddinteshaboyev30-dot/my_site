@@ -1,38 +1,14 @@
-const data = [
+let container = document.getElementById("container")
 
-{
-name:"Alisher Navoiy",
-emoji:"📚",
-img:"images/alisher-navoiy.jpg"
-},
+function show(list){
 
-{
-name:"Ibn Sino",
-emoji:"🧠",
-img:"images/ibn-sino.jpg"
-},
-
-{
-name:"Ulugbek",
-emoji:"🔭",
-img:"images/ulugbek.jpg"
-}
-
-]
-
-const results = document.getElementById("results")
-
-function showData(list){
-
-results.innerHTML=""
+container.innerHTML=""
 
 list.forEach(p=>{
 
-results.innerHTML += `
+container.innerHTML+=`
 <div class="card">
-<img src="${p.img}">
-<h2>${p.name}</h2>
-<p>${p.emoji}</p>
+<h3>${p.name}</h3>
 </div>
 `
 
@@ -40,50 +16,16 @@ results.innerHTML += `
 
 }
 
-showData(data)
+show(people)
 
-document.getElementById("search").addEventListener("input", e=>{
+document.getElementById("search").addEventListener("input",function(){
 
-let q = e.target.value.toLowerCase()
+let q=this.value.toLowerCase()
 
-let filtered = data.filter(p=>
-
-p.name.toLowerCase().includes(q) ||
-p.emoji.includes(q)
+let filtered=people.filter(p =>
+p.name.toLowerCase().includes(q)
 )
 
-showData(filtered)
+show(filtered)
 
 })
-
-function startVoice(){
-
-const rec = new webkitSpeechRecognition()
-
-rec.lang="uz-UZ"
-
-rec.onresult = e=>{
-
-let text = e.results[0][0].transcript
-
-document.getElementById("search").value=text
-
-document.getElementById("search").dispatchEvent(new Event("input"))
-
-}
-
-rec.start()
-
-}
-
-function speakText(){
-
-let text = document.body.innerText
-
-let speech = new SpeechSynthesisUtterance(text)
-
-speech.lang="uz-UZ"
-
-speechSynthesis.speak(speech)
-
-}
