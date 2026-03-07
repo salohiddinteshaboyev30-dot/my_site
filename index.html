@@ -1,21 +1,116 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
 <meta charset="UTF-8">
 <title>Bobo Kalonlarimiz</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
+<style>
+body{
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+}
+
+input{
+padding:10px;
+width:250px;
+font-size:16px;
+}
+
+button{
+padding:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.card{
+margin-top:30px;
+}
+
+img{
+width:200px;
+border-radius:10px;
+}
+</style>
+
+</head>
 <body>
 
 <h1>Bobo Kalonlarimiz</h1>
 
-<input id="search" placeholder="Qidirish...">
+<input id="search" placeholder="Ism yozing...">
+<button onclick="search()">Qidirish</button>
+<button onclick="voice()">🎤 Ovoz</button>
 
-<div id="container"></div>
+<div id="result"></div>
 
-<script src="script.js"></script>
+<script>
+
+const data = {
+"ibn sino":{
+img:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Ibn_Sina.jpg",
+text:"Abu Ali Ibn Sino - buyuk tabib va olim"
+},
+
+"al xorazmiy":{
+img:"https://upload.wikimedia.org/wikipedia/commons/f/f2/Al-Khwarizmi.jpg",
+text:"Muhammad Al Xorazmiy - algebra asoschisi"
+},
+
+"amir temur":{
+img:"https://upload.wikimedia.org/wikipedia/commons/9/9c/Amir_Timur.jpg",
+text:"Amir Temur - buyuk sarkarda"
+}
+
+}
+
+function search(){
+
+let name=document.getElementById("search").value.toLowerCase()
+
+let person=data[name]
+
+if(person){
+
+document.getElementById("result").innerHTML=
+`
+<div class="card">
+<img src="${person.img}">
+<h2>${name}</h2>
+<p>${person.text}</p>
+</div>
+`
+
+}else{
+
+document.getElementById("result").innerHTML="Topilmadi"
+
+}
+
+}
+
+function voice(){
+
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)()
+
+recognition.lang="uz-UZ"
+
+recognition.start()
+
+recognition.onresult=function(e){
+
+let text=e.results[0][0].transcript
+
+document.getElementById("search").value=text
+
+search()
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
