@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
 <meta charset="UTF-8">
 <title>Bobo Kalonlarimiz</title>
@@ -8,26 +7,27 @@
 <style>
 
 body{
-background:#0f2027;
+margin:0;
 font-family:Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
 text-align:center;
-margin:0;
 }
 
-h1{
+header{
+font-size:55px;
+padding:35px;
 color:#6ad8ff;
-font-size:45px;
-margin-top:20px;
+font-weight:bold;
 }
 
 #search{
-padding:12px;
-width:300px;
+padding:15px;
+width:320px;
 font-size:18px;
 border-radius:10px;
 border:none;
-margin:20px;
+margin-bottom:20px;
 }
 
 button{
@@ -37,144 +37,191 @@ border-radius:10px;
 border:none;
 cursor:pointer;
 background:#6ad8ff;
+margin-left:10px;
 }
 
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:30px;
 padding:40px;
 }
 
 .card{
-background:#1f3b4a;
-padding:10px;
-border-radius:15px;
+background:rgba(255,255,255,0.1);
+padding:15px;
+border-radius:20px;
 cursor:pointer;
 transition:0.3s;
 }
 
 .card:hover{
-transform:scale(1.05);
+transform:scale(1.08);
+background:rgba(255,255,255,0.2);
 }
 
 .card img{
 width:100%;
-height:220px;
+height:200px;
 object-fit:cover;
 border-radius:10px;
 }
 
 .name{
 font-size:20px;
-color:#6ad8ff;
 margin-top:10px;
+color:#6ad8ff;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<h1>Bobo Kalonlarimiz</h1>
+<header>Bobo Kalonlarimiz</header>
 
-<input id="search" placeholder="Qidirish...">
+<input type="text" id="search" placeholder="Bobo kalon nomini yozing..." onkeyup="searchPerson()">
+
 <button onclick="voiceSearch()">🎤</button>
 
 <div class="container" id="container"></div>
 
 <script>
 
-let people=[
+const bobolar = [
 
-{name:"Alisher Navoiy",img:"https://upload.wikimedia.org/wikipedia/commons/6/6e/Alisher_Navoi.jpg",link:"https://uz.wikipedia.org/wiki/Alisher_Navoiy"},
-{name:"Amir Temur",img:"https://upload.wikimedia.org/wikipedia/commons/7/72/Amir_Timur_reconstruction.jpg",link:"https://uz.wikipedia.org/wiki/Amir_Temur"},
-{name:"Ibn Sino",img:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Avicenna_Portrait.jpg",link:"https://uz.wikipedia.org/wiki/Abu_Ali_ibn_Sino"},
-{name:"Mirzo Ulugbek",img:"https://upload.wikimedia.org/wikipedia/commons/7/77/Ulugh_Beg.jpg",link:"https://uz.wikipedia.org/wiki/Mirzo_Ulug%CA%BBbek"},
-{name:"Zahiriddin Bobur",img:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Babur.jpg",link:"https://uz.wikipedia.org/wiki/Zahiriddin_Muhammad_Bobur"},
-{name:"Al Beruniy",img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Al-Biruni.jpg",link:"https://uz.wikipedia.org/wiki/Abu_Rayhon_Beruniy"},
-{name:"Al Xorazmiy",img:"https://upload.wikimedia.org/wikipedia/commons/2/2a/Muhammad_ibn_Musa_al-Khwarizmi.jpg",link:"https://uz.wikipedia.org/wiki/Muhammad_al-Xorazmiy"},
-{name:"Ahmad Farg'oniy",img:"https://upload.wikimedia.org/wikipedia/commons/0/0c/Alfraganus.jpg",link:"https://uz.wikipedia.org/wiki/Ahmad_al-Farg%CA%BBoniy"},
-{name:"Imom Buxoriy",img:"https://upload.wikimedia.org/wikipedia/commons/3/3f/Imam_Bukhari.jpg",link:"https://uz.wikipedia.org/wiki/Imom_Buxoriy"},
-{name:"Imom Termiziy",img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Imam_Tirmidhi.jpg",link:"https://uz.wikipedia.org/wiki/Imom_Termiziy"},
-{name:"Ahmad Yassaviy",img:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Ahmad_Yasawi.jpg",link:"https://uz.wikipedia.org/wiki/Ahmad_Yassaviy"},
-{name:"Al Farobiy",img:"https://upload.wikimedia.org/wikipedia/commons/8/8c/Al-Farabi.jpg",link:"https://uz.wikipedia.org/wiki/Abu_Nasr_Farobiy"},
-{name:"Yusuf Xos Hojib",img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Yusuf_Khas_Hajib.jpg",link:"https://uz.wikipedia.org/wiki/Yusuf_Xos_Hojib"},
-{name:"Mahmud Koshgari",img:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Mahmud_al-Kashgari.jpg",link:"https://uz.wikipedia.org/wiki/Mahmud_Koshg%CA%BBari"},
-{name:"Kamoliddin Behzod",img:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Kamoleddin_Behzad.jpg",link:"https://uz.wikipedia.org/wiki/Kamoliddin_Behzod"}
+"Alisher Navoiy",
+"Amir Temur",
+"Mirzo Ulug‘bek",
+"Zahiriddin Bobur",
+"Ibn Sino",
+"Muhammad al-Xorazmiy",
+"Al-Beruniy",
+"Ahmad al-Farg‘oniy",
+"Imom al-Buxoriy",
+"Imom at-Termiziy",
+"Ahmad Yassaviy",
+"Bahouddin Naqshband",
+"Najmiddin Kubro",
+"Mahmud Qoshg‘ariy",
+"Mahmud Zamaxshariy",
+"Abu Mansur Moturidiy",
+"Al-Farobiy",
+"Abdurauf Fitrat",
+"Abdulla Qodiriy",
+"Cho‘lpon",
+"Hamza Hakimzoda Niyoziy",
+"Munavvar Qori",
+"Mahmudxo‘ja Behbudiy",
+"Islom Karimov",
+"Sharof Rashidov",
+"Erkin Vohidov",
+"Abdulla Oripov",
+"Zulfiya",
+"Oybek",
+"G‘afur G‘ulom",
+"Ubaydulla Xo‘jayev",
+"Yusuf Xos Hojib",
+"Ahmad Donish",
+"Ogahiy",
+"Boborahim Mashrab",
+"Komil Xorazmiy",
+"Turdi Farog‘iy",
+"Muqimiy",
+"Furqat",
+"Nodira",
+"Gulbadan Begim",
+"Shohruh Mirzo",
+"Temur Malik",
+"Jaloliddin Manguberdi",
+"Sulton Husayn Boyqaro",
+"Ali Qushchi",
+"Qutbiddin Sheroziy",
+"Abdulxoliq G‘ijduvoniy",
+"Sayyid Mir Kulol",
+"Mahdumi A’zam",
+"Khoja Ahror Vali",
+"Ahmad Yugnakiy",
+"Sakkokiy",
+"Lutfiy",
+"Ubaydullaxon",
+"Abdullaxon II",
+"Muhammad Shayboniyxon",
+"Abulg‘ozi Bahodirxon",
+"Munis Xorazmiy",
+"Usmon Nosir",
+"Hamid Olimjon",
+"Tohir Malik",
+"O‘tkir Hoshimov",
+"Pirimqul Qodirov",
+"Odil Yoqubov",
+"Ibrohim Haqqul",
+"Mirtemir",
+"Said Ahmad",
+"Askad Muxtor",
+"Shukur Xolmirzayev",
+"Omon Matjon",
+"Muhammad Yusuf",
+"Xurshid Davron",
+"Abdulla Avloniy",
+"Sadriddin Ayniy",
+"Hoji Muin",
+"Yusuf Saryomiy",
+"Zokirjon Furqat",
+"Anbar Otin",
+"Uvaysiy"
 
 ];
 
-// 150 taga yetkazish
+const container = document.getElementById("container");
 
-let names=[
-"Najmiddin Kubro","Bahauddin Naqshband","Abdulla Qodiriy","Cho'lpon","Fitrat","Usmon Nosir",
-"G'afur G'ulom","Oybek","Erkin Vohidov","Abdulla Oripov","Muhammad Yusuf","Sadriddin Ayniy",
-"Mahmudxoja Behbudiy","Munis Xorazmiy","Ogahiy","Furqat","Muqimiy","Mashrab","Lutfiy","Sakkokiy"
-];
+bobolar.forEach(name => {
 
-names.forEach(n=>{
-people.push({
-name:n,
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6e/Alisher_Navoi.jpg",
-link:"https://uz.wikipedia.org"
-});
-});
-
-while(people.length<150){
-people.push({
-name:"Buyuk ajdod",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6e/Alisher_Navoi.jpg",
-link:"https://uz.wikipedia.org"
-});
-}
-
-let container=document.getElementById("container");
-
-function show(list){
-
-container.innerHTML="";
-
-list.forEach(p=>{
-
-let card=document.createElement("div");
+const card = document.createElement("div");
 card.className="card";
 
-card.innerHTML=`
-<img src="${p.img}">
-<div class="name">${p.name}</div>
+card.innerHTML = `
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/No_Image_Available.jpg/240px-No_Image_Available.jpg">
+<div class="name">${name}</div>
 `;
 
-card.onclick=()=>{
-window.open(p.link);
-}
+card.onclick = () => {
+window.open("https://uz.wikipedia.org/wiki/"+name.replaceAll(" ","_"));
+};
 
 container.appendChild(card);
 
 });
 
+function searchPerson(){
+
+let input=document.getElementById("search").value.toLowerCase();
+let cards=document.getElementsByClassName("card");
+
+for(let i=0;i<cards.length;i++){
+
+let name=cards[i].innerText.toLowerCase();
+
+if(name.includes(input)){
+cards[i].style.display="block";
+}else{
+cards[i].style.display="none";
 }
 
-show(people);
+}
 
-document.getElementById("search").addEventListener("keyup",function(){
-
-let value=this.value.toLowerCase();
-
-let filtered=people.filter(p =>
-p.name.toLowerCase().includes(value)
-);
-
-show(filtered);
-
-});
+}
 
 function voiceSearch(){
 
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const recognition=new SpeechRecognition();
+if(!SpeechRecognition){
+alert("Brauzer ovozli qidiruvni qo‘llamaydi");
+return;
+}
+
+const recognition = new SpeechRecognition();
 
 recognition.lang="uz-UZ";
 
@@ -182,15 +229,11 @@ recognition.start();
 
 recognition.onresult=function(event){
 
-let text=event.results[0][0].transcript;
+let text = event.results[0][0].transcript;
 
 document.getElementById("search").value=text;
 
-let filtered=people.filter(p =>
-p.name.toLowerCase().includes(text.toLowerCase())
-);
-
-show(filtered);
+searchPerson();
 
 }
 
