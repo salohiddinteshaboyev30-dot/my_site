@@ -1,73 +1,89 @@
-let people = [
+const data = [
 
 {
 name:"Alisher Navoiy",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6e/Alisher_Navoi.jpg",
-link:"https://uz.wikipedia.org/wiki/Alisher_Navoiy"
-},
-
-{
-name:"Amir Temur",
-img:"https://upload.wikimedia.org/wikipedia/commons/7/72/Amir_Timur_reconstruction.jpg",
-link:"https://uz.wikipedia.org/wiki/Amir_Temur"
+emoji:"📚",
+img:"images/alisher-navoiy.jpg"
 },
 
 {
 name:"Ibn Sino",
-img:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Avicenna_Portrait.jpg",
-link:"https://uz.wikipedia.org/wiki/Abu_Ali_ibn_Sino"
+emoji:"🧠",
+img:"images/ibn-sino.jpg"
 },
 
 {
-name:"Mirzo Ulug‘bek",
-img:"https://upload.wikimedia.org/wikipedia/commons/7/77/Ulugh_Beg.jpg",
-link:"https://uz.wikipedia.org/wiki/Mirzo_Ulug%CA%BBbek"
-},
-
-{
-name:"Zahiriddin Bobur",
-img:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Babur.jpg",
-link:"https://uz.wikipedia.org/wiki/Zahiriddin_Muhammad_Bobur"
+name:"Ulugbek",
+emoji:"🔭",
+img:"images/ulugbek.jpg"
 }
 
-];
+]
 
-let container = document.getElementById("container");
+const results = document.getElementById("results")
 
-function show(list){
+function showData(list){
 
-container.innerHTML="";
+results.innerHTML=""
 
 list.forEach(p=>{
 
-let card=document.createElement("div");
-card.className="card";
-
-card.innerHTML=`
+results.innerHTML += `
+<div class="card">
 <img src="${p.img}">
-<div class="name">${p.name}</div>
-`;
+<h2>${p.name}</h2>
+<p>${p.emoji}</p>
+</div>
+`
 
-card.onclick=()=>{
-window.open(p.link);
-}
-
-container.appendChild(card);
-
-});
+})
 
 }
 
-show(people);
+showData(data)
 
-document.getElementById("search").addEventListener("keyup",function(){
+document.getElementById("search").addEventListener("input", e=>{
 
-let value=this.value.toLowerCase();
+let q = e.target.value.toLowerCase()
 
-let filtered=people.filter(p =>
-p.name.toLowerCase().includes(value)
-);
+let filtered = data.filter(p=>
 
-show(filtered);
+p.name.toLowerCase().includes(q) ||
+p.emoji.includes(q)
+)
 
-});
+showData(filtered)
+
+})
+
+function startVoice(){
+
+const rec = new webkitSpeechRecognition()
+
+rec.lang="uz-UZ"
+
+rec.onresult = e=>{
+
+let text = e.results[0][0].transcript
+
+document.getElementById("search").value=text
+
+document.getElementById("search").dispatchEvent(new Event("input"))
+
+}
+
+rec.start()
+
+}
+
+function speakText(){
+
+let text = document.body.innerText
+
+let speech = new SpeechSynthesisUtterance(text)
+
+speech.lang="uz-UZ"
+
+speechSynthesis.speak(speech)
+
+}
