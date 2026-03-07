@@ -2,16 +2,16 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<title>O'zbek Bobokalonlari</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O‘zbek Bobokalonlari</title>
 
 <style>
-
 body{
+margin:0;
 font-family:Arial;
-background:#0f172a;
+background:url("https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1920") no-repeat center/cover;
 color:white;
 text-align:center;
-margin:0;
 }
 
 header{
@@ -20,7 +20,7 @@ justify-content:center;
 align-items:center;
 gap:15px;
 padding:20px;
-background:#020617;
+background:rgba(0,0,0,0.5);
 }
 
 .logo{
@@ -30,6 +30,7 @@ height:60px;
 
 h1{
 margin:0;
+font-size:32px;
 }
 
 .searchBox{
@@ -37,20 +38,18 @@ margin:20px;
 }
 
 input{
-padding:12px;
+padding:10px;
 width:250px;
-border-radius:10px;
 border:none;
+border-radius:8px;
 font-size:16px;
 }
 
 button{
-padding:12px;
+padding:10px;
 border:none;
-border-radius:10px;
-background:#38bdf8;
+border-radius:8px;
 cursor:pointer;
-font-size:18px;
 }
 
 .grid{
@@ -61,7 +60,7 @@ padding:20px;
 }
 
 .card{
-background:#1e293b;
+background:rgba(0,0,0,0.6);
 border-radius:15px;
 padding:15px;
 transition:0.3s;
@@ -78,6 +77,9 @@ object-fit:cover;
 border-radius:10px;
 }
 
+.card h3{
+margin-top:10px;
+}
 </style>
 </head>
 
@@ -85,149 +87,146 @@ border-radius:10px;
 
 <header>
 
-<!-- SVG LOGO -->
 <svg class="logo" viewBox="0 0 100 100">
-<circle cx="50" cy="50" r="45" fill="#38bdf8"/>
-<text x="50" y="60" font-size="40" text-anchor="middle" fill="black">UZ</text>
+<circle cx="50" cy="50" r="45" fill="gold"/>
+<text x="50" y="60" font-size="40" text-anchor="middle" fill="black">U</text>
 </svg>
 
-<h1>O'zbek Bobokalonlari</h1>
+<h1>O‘zbek Bobokalonlari</h1>
 
 </header>
 
-
 <div class="searchBox">
-
-<input id="search" placeholder="Ism yozing...">
-
+<input type="text" id="search" placeholder="Bobokalonni qidir...">
 <button onclick="voiceSearch()">🎤</button>
-
 </div>
 
-
 <div class="grid" id="grid"></div>
-
 
 <script>
 
 const people = [
 
+{name:"Alisher Navoiy",img:"https://upload.wikimedia.org/wikipedia/commons/6/6a/Alisher_Navoi_2.jpg"},
 {name:"Amir Temur"},
-{name:"Alisher Navoiy"},
 {name:"Abu Ali ibn Sino"},
 {name:"Mirzo Ulugbek"},
-{name:"Zahiriddin Muhammad Bobur"},
-{name:"Ahmad al-Fargoni"},
-{name:"Al-Biruniy"},
+{name:"Al-Xorazmiy"},
+{name:"Ahmad Farg‘oniy"},
 {name:"Imom Buxoriy"},
 {name:"Imom Termiziy"},
-{name:"Bahauddin Naqshband"},
-{name:"Najmiddin Kubro"},
+{name:"Burhoniddin Marg‘inoniy"},
 {name:"Mahmud Zamakhshari"},
-{name:"Abdulxoliq Gijduvoniy"},
-{name:"Khoja Ahror Vali"},
+{name:"Abu Rayhon Beruniy"},
+{name:"Najmiddin Kubro"},
+{name:"Bahouddin Naqshband"},
 {name:"Pahlavon Mahmud"},
-{name:"Burhoniddin Margiloniy"},
 {name:"Sadriddin Ayniy"},
-{name:"Fitrat"},
+{name:"Cho‘lpon"},
 {name:"Abdulla Qodiriy"},
-{name:"Cho'lpon"},
 {name:"Hamza Hakimzoda"},
-{name:"Berdaq"},
-{name:"Ogahiy"},
-{name:"Munis Xorazmiy"},
-{name:"Boborahim Mashrab"},
-{name:"Sufi Olloyor"},
-{name:"Mahmudhoja Behbudiy"},
-{name:"Abdurauf Fitrat"},
-{name:"Usmon Nosir"},
-{name:"Gafur G'ulom"},
+{name:"Fitrat"},
+{name:"G‘afur G‘ulom"},
 {name:"Oybek"},
-{name:"Abdulla Oripov"},
 {name:"Erkin Vohidov"},
+{name:"Abdulla Oripov"},
 {name:"Muhammad Yusuf"},
-{name:"Togay Murod"},
-{name:"Pirimqul Qodirov"},
-{name:"Shukur Xolmirzaev"},
-{name:"O'tkir Hoshimov"},
-{name:"Abdulla Avloniy"},
-{name:"Islom Karimov"},
-
-{name:"Bobur Mirzo"},
-{name:"Ubaydulla Xon"},
-{name:"Abdulazizxon"},
-{name:"Subhonqulixon"},
-{name:"Muhammad Shayboniy"},
-{name:"Ko'chkunjixon"},
-{name:"Abdullaxon II"},
-{name:"Muhammad Rahimxon"},
-{name:"Feruz"},
-{name:"Olloqulixon"},
-{name:"Muhammad Aminxon"},
-{name:"Sayid Olimxon"},
-
-{name:"Ali Qushchi"},
-{name:"Qozizoda Rumiy"},
-{name:"Giyosiddin Jamshid"},
-{name:"Ulugbek shogirdlari"},
-{name:"Ahmad Yassaviy"},
-{name:"Sulaymon Boqirg'oniy"},
-{name:"Lutfiy"},
-{name:"Sakkokiy"},
-{name:"Atoi"},
-{name:"Gadoiy"},
-{name:"Durbek"},
-{name:"Husayn Boyqaro"},
+{name:"Zahiriddin Bobur"},
 {name:"Nodira"},
 {name:"Uvaysiy"},
-{name:"Anbar Otin"},
-{name:"Dilshod Barno"},
-{name:"Turdi Farogiy"},
-{name:"Mashrab shogirdlari"},
+{name:"Mashrab"},
+{name:"Ogahiy"},
 {name:"Munis"},
-{name:"Ogahiy shogirdlari"},
-
-{name:"Alpomish dostoni qahramoni"},
-{name:"Go'ro'g'li"},
-{name:"Rustam"},
-{name:"Jaloliddin Manguberdi"},
-{name:"Temur Malik"},
-{name:"Shiroq"},
-{name:"To'maris"},
-{name:"Spitamen"},
-{name:"Afrasiob"},
-{name:"Qutayba ibn Muslim"},
-{name:"Abu Muslim"},
-{name:"Nasr ibn Sayyor"},
-{name:"Al-Moturidiy"},
-{name:"Abul Muin Nasafiy"},
-{name:"Burhoniddin Marghinani"},
-{name:"Najmiddin Komilov"},
-{name:"Sadriddin Salim Buxoriy"},
-{name:"Khoja Muhammad Porso"},
-{name:"Khoja Ubaydulloh Ahror"},
-{name:"Muhammad Sodiq Muhammad Yusuf"}
+{name:"Furqat"},
+{name:"Muqimiy"},
+{name:"Hamid Olimjon"},
+{name:"Zulfiya"},
+{name:"Utkir Hoshimov"},
+{name:"Said Ahmad"},
+{name:"Turob To‘la"},
+{name:"Shukrullo"},
+{name:"Omon Matjon"},
+{name:"Mirtemir"},
+{name:"Asqad Muxtor"},
+{name:"Odil Yoqubov"},
+{name:"Pirimqul Qodirov"},
+{name:"Erkin Azam"},
+{name:"Xurshid Davron"},
+{name:"Shavkat Rahmon"},
+{name:"Tohir Malik"},
+{name:"Isajon Sultan"},
+{name:"Muhammad Ali"},
+{name:"Olimjon Ostonov"},
+{name:"Aziz Qayumov"},
+{name:"Ibrohim Haqqul"},
+{name:"Aziz Abduazizov"},
+{name:"Abdulla Avloniy"},
+{name:"Mahmudxo‘ja Behbudiy"},
+{name:"Munavvar qori"},
+{name:"Ismail Gasprinskiy"},
+{name:"Abdurauf Fitrat"},
+{name:"Sadriddin Salim"},
+{name:"Rauf Parfi"},
+{name:"Jamol Kamol"},
+{name:"Sirojiddin Sayyid"},
+{name:"Usmon Azim"},
+{name:"Iqbol Mirzo"},
+{name:"Rustam Musurmon"},
+{name:"Saidbek Xasan"},
+{name:"Muhammad Solih"},
+{name:"Qodir Mirmuhamedov"},
+{name:"Ubaydulloh Uvatov"},
+{name:"Saidrasul Azimov"},
+{name:"Nodir Normatov"},
+{name:"Sherali Jo‘rayev"},
+{name:"Yulduz Usmonova"},
+{name:"Ozodbek Nazarbekov"},
+{name:"Sevara Nazarkhan"},
+{name:"Yodgor Sa'diyev"},
+{name:"Turgun Alimatov"},
+{name:"Munojat Yo‘lchiyeva"},
+{name:"Sherali Ismoilov"},
+{name:"Sodiqjon Yusupov"},
+{name:"Rustam Abdullaev"},
+{name:"Azamat Ziyo"},
+{name:"Dilorom Saidova"},
+{name:"Rashid Abdullayev"},
+{name:"Akmal Saidov"},
+{name:"Saidbek Hasanov"},
+{name:"Muhammadjon Xolikov"},
+{name:"Abduqodir Hayitmetov"},
+{name:"Boqijon To‘xliyev"},
+{name:"Qudratilla Rafikov"},
+{name:"Muhammadjon Nuriddinov"},
+{name:"Abdulla Sher"},
+{name:"Abduvali Qori"},
+{name:"Muhammad Sodiq Muhammad Yusuf"},
+{name:"Abdulla Kahhar"},
+{name:"Abdurahmon Jomiy"},
+{name:"Ali Qushchi"},
+{name:"G‘iyosiddin Koshiy"},
+{name:"Qozizoda Rumiy"},
+{name:"Ulughbek Madrasa Ustozlari"}
 
 ];
 
-const grid = document.getElementById("grid");
+const grid=document.getElementById("grid");
 
-function render(){
+function render(list){
 
 grid.innerHTML="";
 
-people.forEach(p=>{
+list.forEach(p=>{
+
+let img=p.img ? p.img :
+"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
 
 let card=document.createElement("div");
-
 card.className="card";
 
 card.innerHTML=`
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
-
+<img src="${img}">
 <h3>${p.name}</h3>
-
 `;
 
 grid.appendChild(card);
@@ -236,52 +235,41 @@ grid.appendChild(card);
 
 }
 
-render();
+render(people);
 
+document.getElementById("search").addEventListener("input",e=>{
 
+let text=e.target.value.toLowerCase();
 
-document.getElementById("search").addEventListener("input",()=>{
+let filtered=people.filter(p=>p.name.toLowerCase().includes(text));
 
-let value=document.getElementById("search").value.toLowerCase();
-
-let cards=document.querySelectorAll(".card");
-
-cards.forEach(card=>{
-
-let text=card.innerText.toLowerCase();
-
-card.style.display=text.includes(value)?"block":"none";
+render(filtered);
 
 });
-
-});
-
-
 
 function voiceSearch(){
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-if(!SpeechRecognition){
+if(!('webkitSpeechRecognition' in window)){
 alert("Brauzer ovozli qidiruvni qo‘llamaydi");
 return;
 }
 
-const recognition = new SpeechRecognition();
+let rec=new webkitSpeechRecognition();
+rec.lang="uz-UZ";
 
-recognition.lang="uz-UZ";
-
-recognition.start();
-
-recognition.onresult=function(e){
+rec.onresult=function(e){
 
 let text=e.results[0][0].transcript;
 
 document.getElementById("search").value=text;
 
-document.getElementById("search").dispatchEvent(new Event("input"));
+let filtered=people.filter(p=>p.name.toLowerCase().includes(text.toLowerCase()));
+
+render(filtered);
 
 }
+
+rec.start();
 
 }
 
