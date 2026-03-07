@@ -1,20 +1,135 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
+
 <meta charset="UTF-8">
 <title>Bobo Kalonlarimiz</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+}
+
+h1{
+font-size:50px;
+padding:20px;
+color:#5fd7ff;
+}
+
+#search{
+padding:12px;
+width:300px;
+font-size:18px;
+border-radius:10px;
+border:none;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
+padding:40px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:15px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.name{
+margin-top:10px;
+font-size:20px;
+color:#5fd7ff;
+}
+
+</style>
 </head>
 
 <body>
 
 <h1>Bobo Kalonlarimiz</h1>
 
-<input id="search" placeholder="Bobo kalon nomini yozing...">
+<input type="text" id="search" placeholder="Qidirish..." onkeyup="searchPerson()">
 
-<div id="container"></div>
+<div class="container" id="container">
 
-<script src="script.js"></script>
+<div class="card" onclick="openWiki('Alisher_Navoiy')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Alisher_Navoi.jpg">
+<div class="name">Alisher Navoiy</div>
+</div>
+
+<div class="card" onclick="openWiki('Amir_Temur')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Amir_Timur_reconstruction.jpg">
+<div class="name">Amir Temur</div>
+</div>
+
+<div class="card" onclick="openWiki('Abu_Ali_ibn_Sino')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Avicenna_Portrait.jpg">
+<div class="name">Ibn Sino</div>
+</div>
+
+<div class="card" onclick="openWiki('Mirzo_Ulug%CA%BBbek')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Ulugh_Beg.jpg">
+<div class="name">Mirzo Ulug‘bek</div>
+</div>
+
+<div class="card" onclick="openWiki('Zahiriddin_Muhammad_Bobur')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Babur.jpg">
+<div class="name">Zahiriddin Bobur</div>
+</div>
+
+<div class="card" onclick="openWiki('Muhammad_ibn_Musa_al-Khwarizmi')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Al-Khwarizmi.jpg">
+<div class="name">Muhammad al-Xorazmiy</div>
+</div>
+
+</div>
+
+<script>
+
+function openWiki(name){
+window.open("https://uz.wikipedia.org/wiki/"+name);
+}
+
+function searchPerson(){
+
+let input=document.getElementById("search").value.toLowerCase();
+let cards=document.getElementsByClassName("card");
+
+for(let i=0;i<cards.length;i++){
+
+let name=cards[i].innerText.toLowerCase();
+
+if(name.includes(input)){
+cards[i].style.display="block";
+}else{
+cards[i].style.display="none";
+}
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
