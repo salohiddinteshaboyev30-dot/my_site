@@ -3,277 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>O‘zbek Bobokalonlari</title>
+<title>Bobo Kalonlarimiz</title>
 
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:url("https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1920") no-repeat center/cover;
-color:white;
-text-align:center;
-}
-
-header{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:15px;
-padding:20px;
-background:rgba(0,0,0,0.5);
-}
-
-.logo{
-width:60px;
-height:60px;
-}
-
-h1{
-margin:0;
-font-size:32px;
-}
-
-.searchBox{
-margin:20px;
-}
-
-input{
-padding:10px;
-width:250px;
-border:none;
-border-radius:8px;
-font-size:16px;
-}
-
-button{
-padding:10px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-padding:20px;
-}
-
-.card{
-background:rgba(0,0,0,0.6);
-border-radius:15px;
-padding:15px;
-transition:0.3s;
-}
-
-.card:hover{
-transform:scale(1.05);
-}
-
-.card img{
-width:100%;
-height:200px;
-object-fit:cover;
-border-radius:10px;
-}
-
-.card h3{
-margin-top:10px;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-
-<svg class="logo" viewBox="0 0 100 100">
-<circle cx="50" cy="50" r="45" fill="gold"/>
-<text x="50" y="60" font-size="40" text-anchor="middle" fill="black">U</text>
-</svg>
-
-<h1>O‘zbek Bobokalonlari</h1>
-
-</header>
+<h1>Bobo Kalonlarimiz</h1>
 
 <div class="searchBox">
-<input type="text" id="search" placeholder="Bobokalonni qidir...">
-<button onclick="voiceSearch()">🎤</button>
+<input type="text" id="search" placeholder="Bobo kalon nomini yozing...">
+<button id="voiceBtn">🎤</button>
 </div>
 
 <div class="grid" id="grid"></div>
 
-<script>
+<div class="modal" id="modal">
+<div class="modalContent">
+<h2 id="modalName"></h2>
+<p id="modalInfo"></p>
+<button onclick="closeModal()">Yopish</button>
+</div>
+</div>
 
-const people = [
-
-{name:"Alisher Navoiy",img:"https://upload.wikimedia.org/wikipedia/commons/6/6a/Alisher_Navoi_2.jpg"},
-{name:"Amir Temur"},
-{name:"Abu Ali ibn Sino"},
-{name:"Mirzo Ulugbek"},
-{name:"Al-Xorazmiy"},
-{name:"Ahmad Farg‘oniy"},
-{name:"Imom Buxoriy"},
-{name:"Imom Termiziy"},
-{name:"Burhoniddin Marg‘inoniy"},
-{name:"Mahmud Zamakhshari"},
-{name:"Abu Rayhon Beruniy"},
-{name:"Najmiddin Kubro"},
-{name:"Bahouddin Naqshband"},
-{name:"Pahlavon Mahmud"},
-{name:"Sadriddin Ayniy"},
-{name:"Cho‘lpon"},
-{name:"Abdulla Qodiriy"},
-{name:"Hamza Hakimzoda"},
-{name:"Fitrat"},
-{name:"G‘afur G‘ulom"},
-{name:"Oybek"},
-{name:"Erkin Vohidov"},
-{name:"Abdulla Oripov"},
-{name:"Muhammad Yusuf"},
-{name:"Zahiriddin Bobur"},
-{name:"Nodira"},
-{name:"Uvaysiy"},
-{name:"Mashrab"},
-{name:"Ogahiy"},
-{name:"Munis"},
-{name:"Furqat"},
-{name:"Muqimiy"},
-{name:"Hamid Olimjon"},
-{name:"Zulfiya"},
-{name:"Utkir Hoshimov"},
-{name:"Said Ahmad"},
-{name:"Turob To‘la"},
-{name:"Shukrullo"},
-{name:"Omon Matjon"},
-{name:"Mirtemir"},
-{name:"Asqad Muxtor"},
-{name:"Odil Yoqubov"},
-{name:"Pirimqul Qodirov"},
-{name:"Erkin Azam"},
-{name:"Xurshid Davron"},
-{name:"Shavkat Rahmon"},
-{name:"Tohir Malik"},
-{name:"Isajon Sultan"},
-{name:"Muhammad Ali"},
-{name:"Olimjon Ostonov"},
-{name:"Aziz Qayumov"},
-{name:"Ibrohim Haqqul"},
-{name:"Aziz Abduazizov"},
-{name:"Abdulla Avloniy"},
-{name:"Mahmudxo‘ja Behbudiy"},
-{name:"Munavvar qori"},
-{name:"Ismail Gasprinskiy"},
-{name:"Abdurauf Fitrat"},
-{name:"Sadriddin Salim"},
-{name:"Rauf Parfi"},
-{name:"Jamol Kamol"},
-{name:"Sirojiddin Sayyid"},
-{name:"Usmon Azim"},
-{name:"Iqbol Mirzo"},
-{name:"Rustam Musurmon"},
-{name:"Saidbek Xasan"},
-{name:"Muhammad Solih"},
-{name:"Qodir Mirmuhamedov"},
-{name:"Ubaydulloh Uvatov"},
-{name:"Saidrasul Azimov"},
-{name:"Nodir Normatov"},
-{name:"Sherali Jo‘rayev"},
-{name:"Yulduz Usmonova"},
-{name:"Ozodbek Nazarbekov"},
-{name:"Sevara Nazarkhan"},
-{name:"Yodgor Sa'diyev"},
-{name:"Turgun Alimatov"},
-{name:"Munojat Yo‘lchiyeva"},
-{name:"Sherali Ismoilov"},
-{name:"Sodiqjon Yusupov"},
-{name:"Rustam Abdullaev"},
-{name:"Azamat Ziyo"},
-{name:"Dilorom Saidova"},
-{name:"Rashid Abdullayev"},
-{name:"Akmal Saidov"},
-{name:"Saidbek Hasanov"},
-{name:"Muhammadjon Xolikov"},
-{name:"Abduqodir Hayitmetov"},
-{name:"Boqijon To‘xliyev"},
-{name:"Qudratilla Rafikov"},
-{name:"Muhammadjon Nuriddinov"},
-{name:"Abdulla Sher"},
-{name:"Abduvali Qori"},
-{name:"Muhammad Sodiq Muhammad Yusuf"},
-{name:"Abdulla Kahhar"},
-{name:"Abdurahmon Jomiy"},
-{name:"Ali Qushchi"},
-{name:"G‘iyosiddin Koshiy"},
-{name:"Qozizoda Rumiy"},
-{name:"Ulughbek Madrasa Ustozlari"}
-
-];
-
-const grid=document.getElementById("grid");
-
-function render(list){
-
-grid.innerHTML="";
-
-list.forEach(p=>{
-
-let img=p.img ? p.img :
-"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
-
-let card=document.createElement("div");
-card.className="card";
-
-card.innerHTML=`
-<img src="${img}">
-<h3>${p.name}</h3>
-`;
-
-grid.appendChild(card);
-
-});
-
-}
-
-render(people);
-
-document.getElementById("search").addEventListener("input",e=>{
-
-let text=e.target.value.toLowerCase();
-
-let filtered=people.filter(p=>p.name.toLowerCase().includes(text));
-
-render(filtered);
-
-});
-
-function voiceSearch(){
-
-if(!('webkitSpeechRecognition' in window)){
-alert("Brauzer ovozli qidiruvni qo‘llamaydi");
-return;
-}
-
-let rec=new webkitSpeechRecognition();
-rec.lang="uz-UZ";
-
-rec.onresult=function(e){
-
-let text=e.results[0][0].transcript;
-
-document.getElementById("search").value=text;
-
-let filtered=people.filter(p=>p.name.toLowerCase().includes(text.toLowerCase()));
-
-render(filtered);
-
-}
-
-rec.start();
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
