@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Bobo Kalonlarimiz</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<h1>Bobo Kalonlarimiz</h1>
+<header>Bobo Kalonlarimiz</header>
 
-<div class="searchBox">
-<input type="text" id="search" placeholder="Bobo kalon nomini yozing...">
-<button id="voiceBtn">🎤</button>
-</div>
+<input 
+type="text" 
+id="search" 
+placeholder="Bobo kalon nomini yozing..."
+>
 
-<div class="grid" id="grid"></div>
-
-<div class="modal" id="modal">
-<div class="modalContent">
-<h2 id="modalName"></h2>
-<p id="modalInfo"></p>
-<button onclick="closeModal()">Yopish</button>
-</div>
-</div>
+<div class="container" id="container"></div>
 
 <script src="script.js"></script>
 

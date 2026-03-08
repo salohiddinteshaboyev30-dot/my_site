@@ -1,127 +1,73 @@
-const people=[
+const bobolar = [
 
 {
 name:"Alisher Navoiy",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6a/Alisher_Navoi_2.jpg",
-info:"Buyuk shoir va davlat arbobi."
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6a/Alisher_Navoi_2.jpg"
 },
 
 {
 name:"Amir Temur",
-img:"https://upload.wikimedia.org/wikipedia/commons/1/1c/Tamerlan.jpg",
-info:"Temuriylar imperiyasi asoschisi."
+img:"https://upload.wikimedia.org/wikipedia/commons/1/1c/Tamerlan.jpg"
 },
 
 {
 name:"Mirzo Ulugbek",
-img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Ulugh_Beg.jpg",
-info:"Mashhur astronom va matematik."
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Ulugh_Beg.jpg"
 },
 
 {
 name:"Zahiriddin Bobur",
-img:"https://upload.wikimedia.org/wikipedia/commons/0/0e/Babur.jpg",
-info:"Boburiylar imperiyasi asoschisi."
+img:"https://upload.wikimedia.org/wikipedia/commons/0/0e/Babur.jpg"
 },
 
 {
 name:"Ibn Sino",
-img:"https://upload.wikimedia.org/wikipedia/commons/1/1a/Avicenna_Portrait.jpg",
-info:"Mashhur tabib va olim."
+img:"https://upload.wikimedia.org/wikipedia/commons/1/1a/Avicenna_Portrait.jpg"
 }
 
 ];
 
-const grid=document.getElementById("grid");
+const container = document.getElementById("container");
+const searchInput = document.getElementById("search");
 
-function highlight(text,search){
+function render(list){
 
-if(!search) return text;
-
-const reg=new RegExp(search,"gi");
-
-return text.replace(reg,match=>`<span class="highlight">${match}</span>`);
-
-}
-
-function render(list,search=""){
-
-grid.innerHTML="";
+container.innerHTML="";
 
 list.forEach(p=>{
 
-let card=document.createElement("div");
-
+const card=document.createElement("div");
 card.className="card";
 
 card.innerHTML=`
-
-<img src="${p.img}">
-<h3>${highlight(p.name,search)}</h3>
-
+<img src="${p.img}" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/9/99/No_Image_Available.jpg'">
+<div class="name">${p.name}</div>
 `;
 
-card.onclick=()=>openModal(p);
+card.onclick=()=>{
+window.open(
+"https://uz.wikipedia.org/wiki/"+p.name.replace(/ /g,"_"),
+"_blank",
+"noopener"
+);
+};
 
-grid.appendChild(card);
-
-});
-
-}
-
-render(people);
-
-document.getElementById("search").addEventListener("input",e=>{
-
-let text=e.target.value.toLowerCase();
-
-let filtered=people.filter(p=>p.name.toLowerCase().includes(text));
-
-render(filtered,text);
+container.appendChild(card);
 
 });
 
-function openModal(p){
-
-document.getElementById("modal").style.display="flex";
-
-document.getElementById("modalName").innerText=p.name;
-
-document.getElementById("modalInfo").innerText=p.info;
-
 }
 
-function closeModal(){
+render(bobolar);
 
-document.getElementById("modal").style.display="none";
+searchInput.addEventListener("keyup", ()=>{
 
-}
+let input=searchInput.value.toLowerCase();
 
-document.getElementById("voiceBtn").onclick=function(){
+let filtered=bobolar.filter(p=>
+p.name.toLowerCase().includes(input)
+);
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+render(filtered);
 
-if(!SpeechRecognition){
-alert("Chrome brauzer kerak");
-return;
-}
-
-const recognition=new SpeechRecognition();
-
-recognition.lang="uz-UZ";
-
-recognition.onresult=function(e){
-
-let text=e.results[0][0].transcript;
-
-document.getElementById("search").value=text;
-
-let filtered=people.filter(p=>p.name.toLowerCase().includes(text.toLowerCase()));
-
-render(filtered,text);
-
-}
-
-recognition.start();
-
-}
+});
